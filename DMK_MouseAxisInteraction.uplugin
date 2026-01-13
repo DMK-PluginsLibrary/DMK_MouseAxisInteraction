@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "DMK_MouseAxisInteraction",
+	"Description": "",
+	"Category": "Other",
+	"CreatedBy": "Katzberg-Damk",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "DMK_MouseAxisInteraction",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
