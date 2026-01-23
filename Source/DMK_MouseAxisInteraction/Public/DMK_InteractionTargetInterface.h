@@ -31,5 +31,13 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category ="DMK_Interaction")
 	void HoldInteractionAxis(AActor* Issuer, const FVector2D& Axis);
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category ="DMK_Interaction")
-	bool HasBlockingMapping();
+	bool HasInputMapping();
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category ="DMK_Interaction")
+	TSoftObjectPtr<UInputMappingContext> GetInputMapping();
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category ="DMK_Interaction")
+	bool ShouldBlockMovement();
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category ="DMK_Interaction")
+	TSoftObjectPtr<UTexture2D> GetInteractionIcon();
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category ="DMK_Interaction")
+	FText GetInteractionDescription();
 };
