@@ -10,7 +10,7 @@
 
 class UInputMappingContext;
 
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(ClassGroup=(Custom), Blueprintable, BlueprintType, meta=(BlueprintSpawnableComponent))
 class DMK_MOUSEAXISINTERACTION_API UDMK_InteractionComponent : public UActorComponent, public IDMK_InteractionTargetInterface
 {
 	GENERATED_BODY()
@@ -42,27 +42,31 @@ public:
 	void UpdateCachedComponentUsingTrace();
 	
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
+	UPROPERTY(BlueprintReadWrite, Category ="DMK_Interaction")
 	TScriptInterface<IDMK_InteractionTargetInterface> CachedComponent;
 
 	//From this component trace will be launched
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
 	FComponentReference InteractionBaseComponent;
-
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
+	bool Debug = false;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
 	bool EnabledLineTrace = false;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
 	bool ShouldCheckDirection = false;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
 	bool DuringInteraction = false;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
 	FVector HitLocation = FVector(0);
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
 	float CurrentTimeElapsed = 0.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
 	bool ShouldIgnoreOwner = true;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
 	bool ShouldShowDebugTrace = false;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
+	TEnumAsByte<enum EMovementMode> ModeOfMovementToReturn = EMovementMode::MOVE_Walking;
+	UPROPERTY(BlueprintReadWrite, Category ="DMK_Interaction")
 	TObjectPtr<UInputMappingContext> MappingContextAdded;
 };

@@ -3,12 +3,17 @@
 
 #include "DMK_InteractionBoxComponent.h"
 
-#include "Engine/EngineCustomTimeStep.h"
 #include "PhysicsEngine/PhysicsConstraintComponent.h"
+
+const FSoftObjectPath DefaultMappingContextReference = FSoftObjectPath("/DMK_MouseAxisInteraction/Inputs/Interactions/IMC_DMK_Interaction.IMC_DMK_Interaction");
 
 UDMK_InteractionBoxComponent::UDMK_InteractionBoxComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+	if (MappingContextToAdd.IsNull())
+	{
+		MappingContextToAdd = DefaultMappingContextReference;
+	}
 }
 
 void UDMK_InteractionBoxComponent::BeginPlay()
@@ -26,7 +31,7 @@ void UDMK_InteractionBoxComponent::HoldInteractionAxis_Implementation(AActor* Is
 	HoldAxisInteractionEvent.Broadcast(Issuer,Axis);
 }
 
-bool UDMK_InteractionBoxComponent::HasBlockingMapping_Implementation()
+bool UDMK_InteractionBoxComponent::HasInputMapping_Implementation()
 {
 	return bHaveAxisInteraction;
 }
@@ -41,8 +46,28 @@ void UDMK_InteractionBoxComponent::HoldInteractionStop_Implementation(AActor* Is
 	HoldInteractionStopEvent.Broadcast(Issuer, TimeElapsed);
 }
 
+TSoftObjectPtr<UTexture2D> UDMK_InteractionBoxComponent::GetInteractionIcon_Implementation()
+{
+	return InteractionIcon;
+}
+
+FText UDMK_InteractionBoxComponent::GetInteractionDescription_Implementation()
+{
+	return InteractionDescription;
+}
+
+bool UDMK_InteractionBoxComponent::ShouldBlockMovement_Implementation()
+{
+	return bShouldBlockMovement;
+}
+
+TSoftObjectPtr<UInputMappingContext> UDMK_InteractionBoxComponent::GetInputMapping_Implementation()
+{
+	return MappingContextToAdd;
+}
+
 void UDMK_InteractionBoxComponent::SetNewConstrainRotation(const FRotator& NewRotator,
-	UPhysicsConstraintComponent* PhysicsConstraintComponent)
+                                                           UPhysicsConstraintComponent* PhysicsConstraintComponent)
 {
 	if (PhysicsConstraintComponent != nullptr)
 	{

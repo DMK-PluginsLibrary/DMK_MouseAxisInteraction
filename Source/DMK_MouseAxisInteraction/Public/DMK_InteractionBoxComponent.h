@@ -33,15 +33,24 @@ public:
 	// IDMK_InteractionTargetInterface
 	virtual void HoldInteraction_Implementation(AActor* Issuer) override;
 	virtual void HoldInteractionAxis_Implementation(AActor* Issuer, const FVector2D& Axis) override;
-	virtual bool HasBlockingMapping_Implementation() override;
+	virtual bool HasInputMapping_Implementation() override;
 	virtual void HoldInteractionStop_Implementation(AActor* Issuer, const float TimeElapsed) override;
-	
+	virtual TSoftObjectPtr<UTexture2D> GetInteractionIcon_Implementation() override;
+	virtual FText GetInteractionDescription_Implementation() override;
+	virtual bool ShouldBlockMovement_Implementation() override;
+	virtual TSoftObjectPtr<UInputMappingContext> GetInputMapping_Implementation() override;
+
 	//--------------------------------
 
-	UPROPERTY(EditAnywhere, Category ="DMK_Interaction")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
 	bool bHaveAxisInteraction = false;
-	UPROPERTY(EditAnywhere, Category ="DMK_Interaction")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
+	bool bShouldBlockMovement = true;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
 	float MaximumTimeElapsedToBeFastInteraction = 0.2f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
+	TSoftObjectPtr<UInputMappingContext> MappingContextToAdd;
+	
 	UPROPERTY(BlueprintAssignable, Category ="DMK_Interaction")
 	FDMKInteractionDelegate PressInteraction;
 	UPROPERTY(BlueprintAssignable, Category ="DMK_Interaction")
@@ -51,6 +60,11 @@ public:
 	UPROPERTY(BlueprintAssignable, Category ="DMK_Interaction")
 	FDMKInteractionAxisDelegate HoldAxisInteractionEvent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction|Visualisation", meta=( DisplayThumbnail="true", DisplayName="Image", AllowedClasses="/Script/Engine.Texture,/Script/Engine.MaterialInterface,/Script/Engine.SlateTextureAtlasInterface", DisallowedClasses = "/Script/MediaAssets.MediaTexture"))
+	TSoftObjectPtr<UObject> InteractionIcon;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction|Visualisation")
+	FText InteractionDescription;
+	
 	UFUNCTION(BlueprintCallable, Category ="DMK_Interaction")
 	static void SetNewConstrainRotation(const FRotator& NewRotator, UPhysicsConstraintComponent* PhysicsConstraintComponent);
 
