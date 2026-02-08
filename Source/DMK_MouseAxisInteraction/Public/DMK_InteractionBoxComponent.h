@@ -41,9 +41,7 @@ public:
 	virtual TSoftObjectPtr<UInputMappingContext> GetInputMapping_Implementation() override;
 
 	//--------------------------------
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
-	bool bHaveAxisInteraction = false;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
 	bool bShouldBlockMovement = true;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")

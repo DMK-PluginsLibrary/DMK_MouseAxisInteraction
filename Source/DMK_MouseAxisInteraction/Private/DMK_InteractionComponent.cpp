@@ -165,7 +165,7 @@ void UDMK_InteractionComponent::UpdateCachedComponentUsingTrace()
 	}
 
 	const FVector StartOfTrace =  BaseComponent->GetComponentLocation();
-	const FVector EndOfTrace = BaseComponent->GetForwardVector() * 300 + StartOfTrace;
+	const FVector EndOfTrace = BaseComponent->GetForwardVector() * TraceLenght  + StartOfTrace;
 	FCollisionQueryParams Params;
 	if (this->ShouldIgnoreOwner)
 	{

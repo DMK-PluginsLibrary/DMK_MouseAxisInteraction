@@ -50,7 +50,9 @@ public:
 	FComponentReference InteractionBaseComponent;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
-	bool Debug = false;
+	bool Debug = false;	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
+	float TraceLenght = 300.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
 	bool EnabledLineTrace = false;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="DMK_Interaction")
