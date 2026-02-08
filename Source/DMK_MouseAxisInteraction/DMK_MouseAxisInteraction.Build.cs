@@ -38,7 +38,7 @@ public class DMK_MouseAxisInteraction : ModuleRules
 				"CoreUObject",
 				"Engine",
 				"Slate",
-				"SlateCore", "EnhancedInput", "DeveloperSettings"
+				"SlateCore", "EnhancedInput"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

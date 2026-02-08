@@ -4,7 +4,12 @@
 #include "InputMappingContext.h"
 #include "KismetTraceUtils.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/PlayerController.h"
+#include "Engine/LocalPlayer.h"
+#include "UnrealEngine.h"
+#include "DrawDebugHelpers.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/PrimitiveComponent.h"
 
 
 UDMK_InteractionComponent::UDMK_InteractionComponent()
@@ -43,7 +48,7 @@ void UDMK_InteractionComponent::HoldInteraction_Implementation(AActor* Issuer)
 	if (IDMK_InteractionTargetInterface::Execute_GetInputMapping(CachedComponent.GetObject()).IsNull() == false)
 	{
 		MappingContextAdded = Cast<UInputMappingContext>(IDMK_InteractionTargetInterface::Execute_GetInputMapping(CachedComponent.GetObject()).LoadSynchronous());
-		const APlayerController* PC=  UGameplayStatics::GetPlayerController(GetWorld(),0);
+		const APlayerController* PC=  UGameplayStatics::GetPlayerController(this,0);
 		UEnhancedInputLocalPlayerSubsystem* Input =  ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer());
 		
 		Input->AddMappingContext(MappingContextAdded, 1);
@@ -105,7 +110,7 @@ void UDMK_InteractionComponent::HoldInteractionStop_Implementation(AActor* Issue
 	}
 	if (MappingContextAdded)
 	{
-		const APlayerController* PC=  UGameplayStatics::GetPlayerController(GetWorld(),0);
+		const APlayerController* PC=  UGameplayStatics::GetPlayerController(this,0);
 		UEnhancedInputLocalPlayerSubsystem* Input =  ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer());
 		
 		Input->RemoveMappingContext(MappingContextAdded);
@@ -122,7 +127,7 @@ void UDMK_InteractionComponent::HoldInteractionStop_Implementation(AActor* Issue
 	IDMK_InteractionTargetInterface::Execute_HoldInteractionStop(CachedComponent.GetObject(), GetOwner(), TimeElapsed);
 }
 
-TSoftObjectPtr<UTexture2D> UDMK_InteractionComponent::GetInteractionIcon_Implementation()
+TSoftObjectPtr<UObject> UDMK_InteractionComponent::GetInteractionIcon_Implementation()
 {
 	return IsValid(CachedComponent.GetObject()) ? IDMK_InteractionTargetInterface::Execute_GetInteractionIcon(CachedComponent.GetObject()) : nullptr;
 }
@@ -160,7 +165,7 @@ void UDMK_InteractionComponent::UpdateCachedComponentUsingTrace()
 	}
 
 	const FVector StartOfTrace =  BaseComponent->GetComponentLocation();
-	const FVector EndOfTrace = BaseComponent->GetForwardVector() * 300 + StartOfTrace;
+	const FVector EndOfTrace = BaseComponent->GetForwardVector() * TraceLenght  + StartOfTrace;
 	FCollisionQueryParams Params;
 	if (this->ShouldIgnoreOwner)
 	{
@@ -169,10 +174,12 @@ void UDMK_InteractionComponent::UpdateCachedComponentUsingTrace()
 
 	FHitResult HitResult;
 	const bool bWasHit = GetWorld()->LineTraceSingleByChannel(HitResult, StartOfTrace, EndOfTrace, ECollisionChannel::ECC_Visibility, Params);
+#if ENABLE_DRAW_DEBUG
 	if (ShouldShowDebugTrace)
 	{
 		DrawDebugLineTraceSingle(GetWorld(), StartOfTrace, EndOfTrace, EDrawDebugTrace::ForOneFrame, bWasHit, HitResult, FColor::Red, FColor::Green, 5.f);
 	}
+#endif // ENABLE_DRAW_DEBUG
 	if (bWasHit)
 	{
 		UPrimitiveComponent* HitComponent = HitResult.GetComponent();
@@ -190,7 +197,7 @@ void UDMK_InteractionComponent::UpdateCachedComponentUsingTrace()
 	
 	if (MappingContextAdded)
 	{
-		const APlayerController* PlayerController=  UGameplayStatics::GetPlayerController(GetWorld(),0);
+		const APlayerController* PlayerController=  UGameplayStatics::GetPlayerController(this,0);
 		UEnhancedInputLocalPlayerSubsystem* Input =  ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
 		
 		Input->RemoveMappingContext(MappingContextAdded);
