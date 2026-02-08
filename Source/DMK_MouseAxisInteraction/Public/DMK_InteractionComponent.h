@@ -30,13 +30,13 @@ public:
 	virtual void HoldInteractionAxis_Implementation(AActor* Issuer, const FVector2D& Axis) override;
 	virtual TSoftObjectPtr<UInputMappingContext> GetInputMapping_Implementation() override;
 	virtual void HoldInteractionStop_Implementation(AActor* Issuer, const float TimeElapsed) override;
-	virtual TSoftObjectPtr<UTexture2D> GetInteractionIcon_Implementation() override;
+	virtual TSoftObjectPtr<UObject> GetInteractionIcon_Implementation() override;
 	virtual FText GetInteractionDescription_Implementation() override;
 	virtual bool ShouldBlockMovement_Implementation() override;
 	//--------------------------------
 	
 	
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category ="DMK_Interaction")
 	void SetComponentToInteract(UPrimitiveComponent* NewCachedComponent);
 	
 	void UpdateCachedComponentUsingTrace();

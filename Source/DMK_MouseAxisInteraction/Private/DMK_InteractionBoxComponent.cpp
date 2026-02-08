@@ -46,7 +46,7 @@ void UDMK_InteractionBoxComponent::HoldInteractionStop_Implementation(AActor* Is
 	HoldInteractionStopEvent.Broadcast(Issuer, TimeElapsed);
 }
 
-TSoftObjectPtr<UTexture2D> UDMK_InteractionBoxComponent::GetInteractionIcon_Implementation()
+TSoftObjectPtr<UObject> UDMK_InteractionBoxComponent::GetInteractionIcon_Implementation()
 {
 	return InteractionIcon;
 }

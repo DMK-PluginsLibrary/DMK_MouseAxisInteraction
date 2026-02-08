@@ -37,7 +37,7 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category ="DMK_Interaction")
 	bool ShouldBlockMovement();
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category ="DMK_Interaction")
-	TSoftObjectPtr<UTexture2D> GetInteractionIcon();
+	TSoftObjectPtr<UObject> GetInteractionIcon();
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category ="DMK_Interaction")
 	FText GetInteractionDescription();
 };
